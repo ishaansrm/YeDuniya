@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="loader">
-        <item>#24c6d5</item>
-        <item>#57dd86</item>
-        <item>#ad7dcf</item>
-        <item>#ff484d</item>
-        <item>#fcba59</item>
-        <item>#24c6d5</item>
-    </string-array>
+    <color name="teal">#009638</color>
+    <color name="blue">#005f96</color>
+    <color name="purple">#770096</color>
 </resources>

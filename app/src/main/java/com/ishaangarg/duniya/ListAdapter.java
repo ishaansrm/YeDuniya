@@ -1,24 +1,19 @@
 package com.ishaangarg.duniya;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.StringRequest;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -26,11 +21,11 @@ import java.util.ArrayList;
  */
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
-    private JSONObject[] mDataset;
+    private ArrayList<JSONObject> mDataset;
     //ImageLoader imageLoader = VolleySingleton.getInstance().getImageLoader();
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, loc, distance, cuisines;
+        public TextView name, loc, distance, cuisines, numCoupons;
         ImageView imageView;
 
         public ViewHolder(View v) {
@@ -39,11 +34,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             loc = (TextView) v.findViewById(R.id.loc);
             distance = (TextView) v.findViewById(R.id.distance);
             cuisines = (TextView) v.findViewById(R.id.cuisines);
+            numCoupons = (TextView) v.findViewById(R.id.coupons);
             imageView = (ImageView) v.findViewById(R.id.restaurant_hero);
         }
     }
 
-    public ListAdapter(JSONObject[] myDataset) {
+    public ListAdapter(ArrayList<JSONObject> myDataset) {
         mDataset = myDataset;
     }
 
@@ -59,15 +55,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return vh;
     }
 
-    int count = 3;
-
     @Override
     public void onBindViewHolder(ListAdapter.ViewHolder holder, int position) {
         try {
-            holder.name.setText(mDataset[position].get("OutletName").toString());
-            holder.loc.setText(mDataset[position].get("NeighbourhoodName").toString());
+            holder.name.setText(mDataset.get(position).get("OutletName").toString());
+            holder.loc.setText(mDataset.get(position).get("NeighbourhoodName").toString());
+            String coupons = mDataset.get(position).get("NumCoupons").toString();
 
-            JSONArray categories = mDataset[position].getJSONArray("Categories");
+            holder.numCoupons.setText(coupons.equals("1")?coupons+" Offer" : coupons+" Offers");
+
+            String distance = mDataset.get(position).get("DistText").toString();
+            holder.distance.setText(distance);
+
+            JSONArray categories = mDataset.get(position).getJSONArray("Categories");
 
             String cuisineString = "";
 
@@ -84,19 +84,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             }
             holder.cuisines.setText(cuisineString);
 
-            String IMAGE_URL = mDataset[position].get("CoverURL").toString();
+            String IMAGE_URL = mDataset.get(position).get("CoverURL").toString();
 
             Picasso.with(mContext).load(IMAGE_URL).into(holder.imageView);
-            if (position + count < 29) {
+            if (position + 3 < 29) {
                 Picasso.with(mContext)
-                        .load(mDataset[position + count].get("CoverURL").toString())
-                        .fetch();
-            }
-
-            ++count;
-            if (position + count < 29) {
-                Picasso.with(mContext)
-                        .load(mDataset[position + count].get("CoverURL").toString())
+                        .load(mDataset.get(position+3).get("CoverURL").toString())
                         .fetch();
             }
             //holder.imageView.setImageUrl(IMAGE_URL, imageLoader);
@@ -108,6 +101,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }

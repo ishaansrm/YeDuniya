@@ -16,8 +16,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="150dp">
-            <!--TODO Image is scaling instead of cropping because
-            its in background. ScaleType only applies to src, not background-->
+
             <ImageView
                 android:id="@+id/restaurant_hero"
                 android:layout_width="match_parent"
@@ -71,11 +70,11 @@
                 android:text="Fast Food, Italian, Cafe" />
 
             <TextView
-                android:id="@+id/cost"
+                android:id="@+id/coupons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/cuisines"
-                android:text="₹ 500 for two" />
+                android:text="Coupons" />
 
             <ImageView
                 android:layout_width="wrap_content"
