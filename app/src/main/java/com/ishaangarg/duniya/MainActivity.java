@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
                         // Location settings are not satisfied. However, we have no way to fix the
                         // settings so we won't show the dialog.
-                        //TODO
                         break;
                 }
             }

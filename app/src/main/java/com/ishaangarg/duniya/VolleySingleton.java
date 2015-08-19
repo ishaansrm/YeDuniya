@@ -1,9 +1,6 @@
 package com.ishaangarg.duniya;
 
 import android.app.Application;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.support.v4.util.LruCache;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -19,7 +16,6 @@ public class VolleySingleton extends Application{
     public static final String TAG = VolleySingleton.class.getSimpleName();
 
     private RequestQueue mRequestQueue;
-    private ImageLoader mImageLoader;
 
     private static VolleySingleton mInstance;
 
@@ -39,15 +35,6 @@ public class VolleySingleton extends Application{
         }
 
         return mRequestQueue;
-    }
-
-    public ImageLoader getImageLoader() {
-        getRequestQueue();
-        if (mImageLoader == null) {
-            mImageLoader = new ImageLoader(this.mRequestQueue,
-                    new LruBitmapCache());
-        }
-        return this.mImageLoader;
     }
 
     public <T> void addToRequestQueue(Request<T> req, String tag) {
